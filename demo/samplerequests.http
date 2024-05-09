@@ -1,0 +1,10 @@
+# Default port
+GET {{ host }}
+###
+
+# Endpoint
+GET {{ host }}/
+###
+
+# Actuator
+GET {{ host }}/actuator

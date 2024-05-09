@@ -33,11 +33,11 @@ Use containers to wrap Spring Boot applications
         *** build the app's image
             **** via Maven
 
-                docker build --build-arg JAR_FILE=target/*.jar -t myorg/myapp .
+                docker build --build-arg JAR_FILE=target/docker-demo-0.0.1-SNAPSHOT.jar -t arguments/maven -f ./Dockerfiles/witharguments .
 
             **** via Gradle -
 
-                docker build --build-arg JAR_FILE=build/libs/*.jar -t myorg/myapp .
+                docker build --build-arg JAR_FILE=build/libs/docker-demo-0.0.1-SNAPSHOT.jar -t arguments/gradle -f ./Dockerfiles/witharguments .
 
     ** without aguments == hard code the JAR location
         *** create the dockerFile
@@ -57,32 +57,23 @@ Use containers to wrap Spring Boot applications
 
         *** build the image
 
-            docker build -t myorg/myapp .
+            docker build -t hardcoded/maven -f Dockerfiles/hardcodedmaven .
+            docker build -t hardcoded/gradle -f Dockerfiles/hardcodedgradle .
 
 * Run the docker image
 
-    docker run -p 8080:8080 myorg/myapp
+    docker run -p 8080:8080 arguments/maven
+    docker run -p 8080:8080 arguments/gradle
+    docker run -p 8080:8080 hardcoded/maven
+    docker run -p 8080:8080 hardcoded/gradle
+
+* Trigger the sample requests, specified in 'samplerequests.http'
 
 
-The output resembles the following sample output:
-====
-[source,bash]
-----
-.   ____          _            __ _ _
-/\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
-( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
-\\/  ___)| |_)| | | | | || (_| |  ) ) ) )
-'  |____| .__|_| |_|_| |_\__, | / / / /
-=========|_|==============|___/=/_/_/_/
- :: Spring Boot ::        (v2.7.4)
 
-Nov 06, 2018 2:45:16 PM org.springframework.boot.StartupInfoLogger logStarting
-INFO: Starting Application v0.1.0 on b8469cdc9b87 with PID 1 (/app.jar started by root in /)
-Nov 06, 2018 2:45:16 PM org.springframework.boot.SpringApplication logStartupProfileInfo
-...
-----
-====
 
+
+* TODO:
 If you want to poke around inside the image, you can open a shell in it by running the following command (note that the base image does not have `bash`):
 
 ====
